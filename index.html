@@ -342,48 +342,52 @@
                 </div>
 
                 <div class="lg:col-span-3 bg-black-soft p-10 md:p-14 border border-white/5 relative reveal delay-200">
-                    <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-blood-red via-gold-pure to-blood-red"></div>
-                    <form action="https://formspree.io/f/xbdnyzdr" method="POST">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                            <div>
-                                <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Nom & Prénom</label>
-                                <input type="text" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="Votre nom complet">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Entité / École</label>
-                                <input type="text" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="Nom de l'entreprise ou institut">
-                            </div>
-                        </div>
+    <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-blood-red via-gold-pure to-blood-red"></div>
+    <form action="https://formspree.io/f/xbdnyzdr" method="POST">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div>
+                <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Nom & Prénom</label>
+                <!-- ZEDNA name="name" w required -->
+                <input type="text" name="name" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="Votre nom complet" required>
+            </div>
+            <div>
+                <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Entité / École</label>
+                <!-- ZEDNA name="company" -->
+                <input type="text" name="company" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="Nom de l'entreprise ou institut">
+            </div>
+        </div>
 
-                        <div>
-                            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Contact Email</label>
-                            <input type="email" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="email@domaine.com">
-                        </div>
+        <div>
+            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Contact Email</label>
+            <!-- ZEDNA name="email" w required -->
+            <input type="email" name="email" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="email@domaine.com" required>
+        </div>
 
-                        <div>
-                            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Nature du Besoin</label>
-                            <div class="relative">
-                                <select name="service" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none appearance-none cursor-pointer font-light">
-                                    <option class="bg-black-pure text-white-pure">Ingénierie Web</option>
-                                    <option class="bg-black-pure text-white-pure">Direction Artistique</option>
-                                    <option class="bg-black-pure text-white-pure">Érudition (PFE / Académique)</option>
-                                </select>
-                                <div class="absolute right-0 top-0 bottom-3 flex items-center pointer-events-none text-gold-pure">
-                                    <i class="fa-solid fa-chevron-down text-sm"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Détails du projet</label>
-                            <textarea name="message" rows="3" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none resize-none placeholder-gray-800 font-light" placeholder="Décrivez vos ambitions..."></textarea>
-                        </div>
-
-                        <button type="button" class="hover-trigger w-full bg-white-pure text-black-pure font-bold text-xs tracking-[0.2em] uppercase py-6 hover:bg-blood-red hover:text-white-pure transition-all duration-500 mt-4">
-                            Transmettre la demande
-                        </button>
-                    </form>
+        <div>
+            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Nature du Besoin</label>
+            <div class="relative">
+                <select name="service" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none appearance-none cursor-pointer font-light">
+                    <option class="bg-black-pure text-white-pure">Ingénierie Web</option>
+                    <option class="bg-black-pure text-white-pure">Direction Artistique</option>
+                    <option class="bg-black-pure text-white-pure">Érudition (PFE / Académique)</option>
+                </select>
+                <div class="absolute right-0 top-0 bottom-3 flex items-center pointer-events-none text-gold-pure">
+                    <i class="fa-solid fa-chevron-down text-sm"></i>
                 </div>
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Détails du projet</label>
+            <textarea name="message" rows="3" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none resize-none placeholder-gray-800 font-light" placeholder="Décrivez vos ambitions..." required></textarea>
+        </div>
+
+        <!-- BDDELNA type="button" b type="submit" -->
+        <button type="submit" class="hover-trigger w-full bg-white-pure text-black-pure font-bold text-xs tracking-[0.2em] uppercase py-6 hover:bg-blood-red hover:text-white-pure transition-all duration-500 mt-4">
+            Transmettre la demande
+        </button>
+    </form>
+</div>
             </div>
         </div>
 

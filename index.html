@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth bg-[#000000]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHARAM · CODE</title>
+    <meta name="description" content="Studio digital haut de gamme. Création de sites web, branding et excellence académique au Maroc.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'black-pure': '#000000',
+                        'black-soft': '#0a0a0a',
+                        'white-pure': '#ffffff',
+                        'white-off': '#f5f5f5',
+                        'blood-red': '#D90429', 
+                        'gold-pure': '#D4AF37',
+                        'gray-dim': '#888888'
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        heading: ['Playfair Display', 'serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 15s linear infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        @media (min-width: 1024px) { body { cursor: none; } }
+        #custom-cursor {
+            position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+            background-color: #D4AF37; border-radius: 50%;
+            pointer-events: none; z-index: 100000; mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        body.hovering #custom-cursor {
+            width: 60px; height: 60px; background-color: #D90429;
+            mix-blend-mode: normal; opacity: 0.5; filter: blur(10px);
+        }
+        #preloader {
+            position: fixed; inset: 0; background: #000000; z-index: 999999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #preloader.hide { transform: translateY(-100%); }
+        .char { display: inline-block; transform: translateY(110%); transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
+        .reveal-word.active .char { transform: translateY(0); }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .spotlight-card {
+            position: relative; background: rgba(255, 255, 255, 0.01);
+            overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .spotlight-card::before {
+            content: ""; position: absolute; top: var(--y, 50%); left: var(--x, 50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle closest-side, rgba(212, 175, 55, 0.15), transparent);
+            transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s;
+            pointer-events: none; opacity: 0;
+        }
+        .spotlight-card:hover::before { opacity: 1; }
+        .spotlight-card.red-light:hover::before { background: radial-gradient(circle closest-side, rgba(217, 4, 41, 0.15), transparent); }
+        .text-hollow { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5); }
+        .text-gradient-gold {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        .bg-grid-luxury {
+            background-image: linear-gradient(to right, rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        ::selection { background: #D90429; color: #fff; }
+    </style>
+</head>
+<body class="bg-black-pure text-white-off antialiased overflow-x-hidden">
+
+    <div id="custom-cursor" class="hidden lg:block"></div>
+
+    <div id="preloader">
+        <div class="overflow-hidden">
+            <h1 class="font-heading text-4xl md:text-6xl text-gold-pure italic reveal-word active">
+                <span class="char" style="transition-delay: 0.1s">G</span>
+                <span class="char" style="transition-delay: 0.2s">h</span>
+                <span class="char" style="transition-delay: 0.3s">a</span>
+                <span class="char" style="transition-delay: 0.4s">r</span>
+                <span class="char" style="transition-delay: 0.5s">a</span>
+                <span class="char" style="transition-delay: 0.6s">m</span>
+                <span class="char" style="transition-delay: 0.7s">.</span>
+            </h1>
+        </div>
+        <div class="mt-8 font-mono text-sm tracking-[0.3em] text-white-off" id="loader-counter">00%</div>
+    </div>
+
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-black-pure/80 backdrop-blur-md border-b border-white/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+
+                <a href="#accueil" class="hover-trigger flex-shrink-0 flex items-center gap-3 group">
+                    <div class="w-10 h-10 border border-gold-pure flex items-center justify-center transform rotate-45 group-hover:rotate-90 transition-all duration-500">
+                        <i class="fa-solid fa-code text-white-pure text-sm -rotate-45 group-hover:-rotate-90 transition-all duration-500"></i>
+                    </div>
+                    <span class="font-heading font-black text-2xl tracking-widest text-white-pure uppercase">GHARAM</span>
+                </a>
+
+                <div class="hidden lg:flex space-x-10 items-center">
+                    <a href="#expertises" class="hover-trigger text-white-off hover:text-gold-pure font-mono transition-colors text-xs uppercase tracking-[0.2em]">Expertises</a>
+                    <a href="#processus" class="hover-trigger text-white-off hover:text-gold-pure font-mono transition-colors text-xs uppercase tracking-[0.2em]">Protocole</a>
+                    <a href="#philosophie" class="hover-trigger text-white-off hover:text-gold-pure font-mono transition-colors text-xs uppercase tracking-[0.2em]">Maison</a>
+                    <div class="w-px h-6 bg-white/20"></div>
+                    <a href="#contact" class="hover-trigger bg-blood-red text-white-pure px-8 py-3 font-bold hover:bg-white-pure hover:text-black-pure transition-all duration-500 text-xs uppercase tracking-widest">Démarrer</a>
+                </div>
+
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gold-pure focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-black-pure border-t border-white/10 absolute w-full shadow-2xl">
+            <div class="px-4 pt-4 pb-8 space-y-2 flex flex-col text-center">
+                <a href="#expertises" class="block px-4 py-4 text-xs tracking-widest uppercase font-mono text-white-pure hover:text-gold-pure">Expertises</a>
+                <a href="#processus" class="block px-4 py-4 text-xs tracking-widest uppercase font-mono text-white-pure hover:text-gold-pure">Protocole</a>
+                <a href="#philosophie" class="block px-4 py-4 text-xs tracking-widest uppercase font-mono text-white-pure hover:text-gold-pure">La Maison</a>
+                <div class="pt-6 mt-2">
+                    <a href="#contact" class="inline-block bg-blood-red text-white-pure px-8 py-4 font-bold text-xs uppercase tracking-widest">Démarrer un projet</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="accueil" class="relative pt-32 pb-24 md:pt-48 md:pb-32 bg-black-pure overflow-hidden flex items-center min-h-screen">
+        <div class="absolute inset-0 z-0 bg-grid-luxury opacity-30"></div>
+        
+        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blood-red/20 blur-[150px] rounded-full pointer-events-none mix-blend-screen"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gold-pure/10 blur-[150px] rounded-full pointer-events-none mix-blend-screen"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center mt-10">
+            <div class="max-w-5xl mx-auto space-y-8 reveal active">
+                
+                <div class="inline-flex items-center gap-3 px-6 py-2 border border-gold-pure/40 text-gold-pure text-xs font-mono tracking-[0.2em] uppercase mx-auto">
+                    <span class="w-2 h-2 rounded-full bg-blood-red animate-pulse"></span>
+                    Studio Digital Sur-Mesure
+                </div>
+                
+                <h1 class="font-heading font-black text-6xl md:text-[8vw] leading-[0.9] tracking-tighter uppercase relative">
+                    <span class="block text-hollow hover:text-white-pure transition-colors duration-700">L'Art de</span>
+                    <span class="block relative z-10 italic text-gradient-gold">
+                        l'Excellence<span class="text-blood-red not-italic">.</span>
+                    </span>
+                </h1>
+                
+                <p class="text-base md:text-lg text-gray-dim font-light leading-relaxed max-w-2xl mx-auto font-sans">
+                    Nous forgeons des expériences digitales d'exception. Conception web haut de gamme, identité visuelle luxueuse et ingénierie de précision.
+                </p>
+                
+                <div class="flex justify-center pt-10">
+                    <a href="#contact" class="magnetic-btn hover-trigger w-32 h-32 rounded-full border border-white/20 flex flex-col items-center justify-center gap-2 hover:bg-white-pure hover:text-black-pure transition-colors duration-500 z-20 bg-black-pure">
+                        <span class="font-sans text-xs uppercase tracking-widest font-bold">Initier</span>
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 right-10 z-10 hidden md:block">
+            <div class="w-20 h-20 border border-white/10 rounded-full flex items-center justify-center animate-spin-slow">
+                <i class="fa-solid fa-star-of-life text-gold-pure text-xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <div class="relative w-full h-32 bg-blood-red overflow-hidden flex items-center justify-center -skew-y-2 z-20 border-y border-gold-pure/30">
+        <div class="absolute w-[200%] flex animate-marquee">
+            <div class="flex items-center gap-12 font-heading font-bold text-3xl md:text-5xl text-white-pure whitespace-nowrap">
+                <span>• DESIGN BRUTALISTE</span>
+                <span class="text-black-pure italic">CODE SUR MESURE</span>
+                <span class="text-gold-pure">EXCELLENCE ACADÉMIQUE</span>
+                <span>• DESIGN BRUTALISTE</span>
+                <span class="text-black-pure italic">CODE SUR MESURE</span>
+                <span class="text-gold-pure">EXCELLENCE ACADÉMIQUE</span>
+            </div>
+        </div>
+    </div>
+
+    <section id="expertises" class="py-32 bg-black-soft relative z-10 mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-24 reveal">
+                <span class="text-blood-red font-mono text-xs tracking-[0.3em] uppercase mb-4 block">Savoir-Faire</span>
+                <h2 class="font-heading text-4xl md:text-6xl font-black text-white-pure">L'Arsenal.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32 reveal">
+                <div class="order-2 lg:order-1 space-y-8 pr-0 lg:pr-12">
+                    <h3 class="font-heading text-4xl font-bold text-white-pure">Ingénierie Web <br><span class="italic text-gold-pure text-hollow">Sur-Mesure</span></h3>
+                    <p class="text-lg text-gray-dim font-light leading-relaxed">Nous ne codons pas de simples sites. Nous architecturons des plateformes robustes, fulgurantes, conçues pour dominer votre marché.</p>
+                    <ul class="space-y-4 font-mono text-white-off text-sm uppercase tracking-wide">
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-blood-red"></div> Plateformes E-commerce</li>
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-blood-red"></div> Sites Vitrines Haut de Gamme</li>
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-blood-red"></div> Expériences WebGL & 3D</li>
+                    </ul>
+                </div>
+                <div class="order-1 lg:order-2 spotlight-card h-[400px] flex items-center justify-center group hover-trigger cursor-none border border-white/10 bg-black-pure">
+                    <div class="text-center font-mono text-gold-pure/80 text-sm z-10">
+                        <p class="mb-2 opacity-50">&lt;code&gt;</p>
+                        <p class="text-white-pure text-2xl font-bold">Experience.init();</p>
+                        <p class="mt-2 opacity-50">&lt;/code&gt;</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32 reveal">
+                <div class="spotlight-card red-light h-[400px] flex items-center justify-center relative overflow-hidden group hover-trigger cursor-none border border-white/10 bg-black-pure">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-700 grayscale"></div>
+                    <div class="relative z-10 w-24 h-24 border border-blood-red flex items-center justify-center rotate-45 bg-black-pure/80 backdrop-blur-sm group-hover:bg-blood-red transition-colors duration-500">
+                        <i class="fa-solid fa-pen-nib text-3xl text-white-pure -rotate-45"></i>
+                    </div>
+                </div>
+                <div class="space-y-8 pl-0 lg:pl-12">
+                    <h3 class="font-heading text-4xl font-bold text-white-pure">Direction Artistique <br><span class="italic text-blood-red text-hollow">& Branding</span></h3>
+                    <p class="text-lg text-gray-dim font-light leading-relaxed">Une identité visuelle ne doit pas seulement être belle, elle doit imposer le respect. Nous forgeons des marques intemporelles.</p>
+                    <ul class="space-y-4 font-mono text-white-off text-sm uppercase tracking-wide">
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-gold-pure"></div> Création de Logotypes</li>
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-gold-pure"></div> Chartes Graphiques Éditoriales</li>
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-gold-pure"></div> Design UI/UX Immersif</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
+                <div class="order-2 lg:order-1 space-y-8 pr-0 lg:pr-12">
+                    <h3 class="font-heading text-4xl font-bold text-white-pure">Érudition <br><span class="italic text-gold-pure text-hollow">Académique</span></h3>
+                    <p class="text-lg text-gray-dim font-light leading-relaxed">Un accompagnement d'élite pour vos Projets de Fin d'Études. Nous transformons vos travaux académiques en véritables chefs-d'œuvre techniques et stratégiques.</p>
+                    <ul class="space-y-4 font-mono text-white-off text-sm uppercase tracking-wide">
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-blood-red"></div> Réalisation de PFE Complexes</li>
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-blood-red"></div> Mémoires & Rédaction Technique</li>
+                        <li class="flex items-center gap-4 hover-trigger"><div class="w-2 h-2 bg-blood-red"></div> Mentoring & Préparation Soutenance</li>
+                    </ul>
+                </div>
+                <div class="order-1 lg:order-2 spotlight-card h-[400px] flex items-center justify-center relative overflow-hidden group hover-trigger cursor-none border border-white/10 bg-black-pure">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-700 grayscale"></div>
+                    <div class="relative z-10 w-24 h-24 border border-gold-pure flex items-center justify-center rounded-full bg-black-pure/80 backdrop-blur-sm group-hover:bg-gold-pure transition-colors duration-500">
+                        <i class="fa-solid fa-graduation-cap text-3xl text-white-pure group-hover:text-black-pure transition-colors duration-500"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="philosophie" class="py-32 bg-black-pure relative border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+            <i class="fa-solid fa-quote-right text-4xl text-gold-pure mb-10 opacity-30"></i>
+            <h2 class="font-heading text-3xl md:text-5xl font-light leading-tight mb-12 text-white-pure">
+                "En arabe, <span class="text-gradient-gold font-bold">Gharam (غرام)</span> incarne la passion absolue. C'est le feu qui anime chaque ligne de code."
+            </h2>
+            <div class="w-px h-24 bg-gradient-to-b from-gold-pure to-transparent mx-auto mb-12"></div>
+            <p class="text-gray-dim font-sans font-light tracking-wide max-w-2xl mx-auto leading-loose text-lg">
+                Nous ne sommes pas une usine. Nous fonctionnons comme un atelier d'artisanat numérique. L'obsession du détail est notre norme, la perfection notre seul objectif.
+            </p>
+        </div>
+    </section>
+
+    <section id="processus" class="py-32 bg-black-soft text-white-pure border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 reveal">
+                <span class="text-gold-pure font-mono text-xs tracking-[0.3em] uppercase mb-4 block">Notre Protocole</span>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold">Une Rigueur Militaire.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="spotlight-card p-10 hover-trigger cursor-none reveal">
+                    <span class="font-mono text-gold-pure text-4xl font-bold block mb-6 opacity-30">01</span>
+                    <h4 class="font-sans font-bold text-lg mb-4 uppercase tracking-widest">L'Entretien</h4>
+                    <p class="text-sm text-gray-dim leading-relaxed">Analyse chirurgicale de vos besoins et définition de la stratégie.</p>
+                </div>
+                <div class="spotlight-card red-light p-10 hover-trigger cursor-none reveal delay-100">
+                    <span class="font-mono text-blood-red text-4xl font-bold block mb-6 opacity-30">02</span>
+                    <h4 class="font-sans font-bold text-lg mb-4 uppercase tracking-widest">L'Esquisse</h4>
+                    <p class="text-sm text-gray-dim leading-relaxed">Direction artistique et création de maquettes pixel-perfect.</p>
+                </div>
+                <div class="spotlight-card p-10 hover-trigger cursor-none reveal delay-200">
+                    <span class="font-mono text-gold-pure text-4xl font-bold block mb-6 opacity-30">03</span>
+                    <h4 class="font-sans font-bold text-lg mb-4 uppercase tracking-widest">La Forge</h4>
+                    <p class="text-sm text-gray-dim leading-relaxed">Développement technique avec les technologies les plus pointues.</p>
+                </div>
+                <div class="border border-blood-red p-10 bg-black-pure relative overflow-hidden reveal delay-300 hover-trigger">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-blood-red/20 rounded-bl-full"></div>
+                    <span class="font-mono text-blood-red text-4xl font-bold block mb-6">04</span>
+                    <h4 class="font-sans font-bold text-lg mb-4 uppercase tracking-widest">L'Élévation</h4>
+                    <p class="text-sm text-gray-300 leading-relaxed">Mise en production et remise des clés de votre projet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 bg-black-pure text-white-pure relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-16">
+                
+                <div class="lg:col-span-2 space-y-12 reveal">
+                    <div>
+                        <p class="font-mono text-blood-red tracking-[0.3em] uppercase text-xs mb-6">N'ayez pas peur de l'excellence</p>
+                        <h2 class="font-heading text-5xl md:text-6xl font-black mb-6 uppercase">Initier le <br><span class="italic text-hollow">Changement.</span></h2>
+                    </div>
+
+                    <div class="space-y-8 pt-8 border-t border-white/10 font-mono">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-dim mb-2">Conciergerie WhatsApp</p>
+                            <a href="https://wa.me/212770451481" class="text-lg hover-trigger hover:text-gold-pure transition-colors">+212 7 70 45 14 81</a>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-dim mb-2">Correspondance</p>
+                            <a href="mailto:gharamcode@gmail.com" class="text-lg hover-trigger hover:text-gold-pure transition-colors">gharamcode@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 bg-black-soft p-10 md:p-14 border border-white/5 relative reveal delay-200">
+                    <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-blood-red via-gold-pure to-blood-red"></div>
+                    <form class="space-y-10 font-sans">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div>
+                                <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Nom & Prénom</label>
+                                <input type="text" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="Votre nom complet">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Entité / École</label>
+                                <input type="text" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="Nom de l'entreprise ou institut">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Contact Email</label>
+                            <input type="email" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none placeholder-gray-800 font-light" placeholder="email@domaine.com">
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Nature du Besoin</label>
+                            <div class="relative">
+                                <select class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none appearance-none cursor-pointer font-light">
+                                    <option class="bg-black-pure text-white-pure">Ingénierie Web</option>
+                                    <option class="bg-black-pure text-white-pure">Direction Artistique</option>
+                                    <option class="bg-black-pure text-white-pure">Érudition (PFE / Académique)</option>
+                                </select>
+                                <div class="absolute right-0 top-0 bottom-3 flex items-center pointer-events-none text-gold-pure">
+                                    <i class="fa-solid fa-chevron-down text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-mono uppercase tracking-widest text-gray-dim mb-3">Détails du projet</label>
+                            <textarea rows="3" class="w-full bg-transparent border-b border-white/20 pb-3 text-white-pure focus:border-gold-pure focus:outline-none transition-colors rounded-none resize-none placeholder-gray-800 font-light" placeholder="Décrivez vos ambitions..."></textarea>
+                        </div>
+
+                        <button type="button" class="hover-trigger w-full bg-white-pure text-black-pure font-bold text-xs tracking-[0.2em] uppercase py-6 hover:bg-blood-red hover:text-white-pure transition-all duration-500 mt-4">
+                            Transmettre la demande
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] z-0 translate-y-1/4">
+            <h1 class="font-heading font-black text-[25vw] leading-none text-center whitespace-nowrap text-white-pure">غرام</h1>
+        </div>
+    </section>
+
+    <footer class="bg-black-pure border-t border-white/10 pt-20 pb-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-10 mb-16">
+
+                <div class="flex items-center gap-4 hover-trigger">
+                    <div class="w-10 h-10 border border-gold-pure flex items-center justify-center transform rotate-45">
+                        <i class="fa-solid fa-code text-white-pure -rotate-45 text-sm"></i>
+                    </div>
+                    <span class="font-heading font-black text-2xl tracking-widest text-white-pure uppercase">GHARAM</span>
+                </div>
+
+                <div class="flex gap-8">
+                    <a href="https://www.instagram.com/gharamcode" class="hover-trigger text-gray-dim hover:text-gold-pure transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                    <a href="https://www.linkedin.com/in/gharam-code/" class="hover-trigger text-gray-dim hover:text-gold-pure transition-colors"><i class="fa-brands fa-linkedin-in text-xl"></i></a>
+                    <a href="https://wa.me/212770451481" class="hover-trigger text-gray-dim hover:text-blood-red transition-colors"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono text-gray-dim uppercase tracking-widest">
+                <p>&copy; 2026 GHARAM STUDIO. Made in Morocco.</p>
+                <div class="flex gap-8">
+                    <a href="#" class="hover-trigger hover:text-white-pure transition-colors">Légal</a>
+                    <a href="#" class="hover-trigger hover:text-white-pure transition-colors">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const preloader = document.getElementById('preloader');
+        const counterElement = document.getElementById('loader-counter');
+        let counter = 0;
+        const loaderInterval = setInterval(() => {
+            counter += Math.floor(Math.random() * 15) + 5;
+            if(counter >= 100) {
+                counter = 100;
+                clearInterval(loaderInterval);
+                setTimeout(() => preloader.classList.add('hide'), 600);
+            }
+            counterElement.textContent = counter.toString().padStart(2, '0') + '%';
+        }, 100);
+
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')) {
+                icon.classList.replace('fa-xmark', 'fa-bars');
+            } else {
+                icon.classList.replace('fa-bars', 'fa-xmark');
+            }
+        });
+
+        const cursor = document.getElementById('custom-cursor');
+        const hoverElements = document.querySelectorAll('.hover-trigger, a, button, input, textarea, select');
+        
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+            window.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+        }
+
+        document.querySelectorAll('.spotlight-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            });
+        });
+
+        const magnetBtn = document.querySelector('.magnetic-btn');
+        if(magnetBtn && window.matchMedia("(min-width: 1024px)").matches) {
+            magnetBtn.addEventListener('mousemove', function(e) {
+                const position = magnetBtn.getBoundingClientRect();
+                const x = e.clientX - position.left - position.width / 2;
+                const y = e.clientY - position.top - position.height / 2;
+                magnetBtn.style.transform = `translate(${x * 0.4}px, ${y * 0.4}px)`;
+            });
+            magnetBtn.addEventListener('mouseleave', function() {
+                magnetBtn.style.transform = 'translate(0px, 0px)';
+            });
+        }
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        setTimeout(reveal, 1500); 
+    </script>
+</body>
+</html>
